@@ -1,0 +1,83 @@
+image:
+  name: hashicorp/terraform:0.12.31
+  entrypoint:
+    - '/usr/bin/env'
+    - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+
+stages:
+  - Test and Lint
+  - Build and Push
+  - Staging Plan
+  - Staging Apply
+  - Production Plan
+  - Production Apply
+  - Destroy
+  
+Test and Lint:
+  stage: Test and Lint
+  script:
+    - echo Test and Lint works
+  rules:
+    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME =~ /^(main|production)$/ || $CI_COMMIT_BRANCH =~ /^(main|production)$/'
+
+Validate Terraform:
+  stage: Test and Lint
+  script:
+    - echo Validate Terraform works
+  rules:
+    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME =~ /^(main|production)$/ || $CI_COMMIT_BRANCH =~ /^(main|production)$/'
+
+Build and Push:
+  stage: Build and Push
+  script:
+    - echo Build and Push works
+  rules:
+    - if: '$CI_COMMIT_BRANCH =~ /^(main|production)$/'
+
+Staging Plan:
+  stage: Staging Plan
+  script:
+    - echo Staging Plan works
+  rules:
+    - if: '$CI_COMMIT_BRANCH =~ /^(main|production)$/'
+
+Staging Apply:
+  stage: Staging Apply
+  script:
+    - echo Staging Apply works
+  rules:
+    - if: '$CI_COMMIT_BRANCH =~ /^(main|production)$/'
+
+Production Plan:
+  stage: Production Plan
+  script:
+    - echo Production Plan works
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "production"'
+
+Production Apply:
+  stage: Production Apply
+  script:
+    - echo Production Apply works
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "production"'
+      when: manual
+
+Staging Destroy:
+  stage: Destroy
+  script:
+    - echo Staging Destroy works
+  rules:
+    - if: '$CI_COMMIT_BRANCH =~ /^(main|production)$/'
+      when: manual
+
+Production Destroy:
+  stage: Destroy
+  script:
+    - echo Production Destroy works
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "production"'
+      when: manual
+    
+  
+  
