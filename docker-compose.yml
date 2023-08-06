@@ -1,4 +1,4 @@
-version: "3.9"
+version: "3"
 
 # app: name of service
 # build: use current directory as root, set as dev env
