@@ -32,7 +32,7 @@ Build and Push:
   script:
     - echo Build and Push works
   rules:
-    - '$CI_COMMIT_BRANCH =~ /^(main|production)$/'
+    - if: '$CI_COMMIT_BRANCH =~ /^(main|production)$/'
 
 Staging Plan:
   stage: Staging Plan
