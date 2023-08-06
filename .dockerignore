@@ -4,6 +4,8 @@
 
 # Docker
 .docker
+vol/
+deploy/
 
 # Python
 app/__pycache__/
