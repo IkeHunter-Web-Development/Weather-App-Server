@@ -13,3 +13,10 @@ variable "contact" {
 variable "bastion_key_name" {
   default = "weather-app-bastion"
 }
+variable "db_username" {
+  description = "Database username"
+}
+
+variable "db_password" {
+  description = "Database password"
+}
