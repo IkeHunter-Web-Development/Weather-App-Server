@@ -1,3 +1,5 @@
 db_username       = "recipeapp"
 db_password       = "changeme"
 django_secret_key = "changeme"
+weather_api_key   = "get_from_weather_api"
+google_maps_key   = "get_from_google_maps"
