@@ -49,7 +49,7 @@ data "template_file" "server_container_definitions" {
     db_pass                     = aws_db_instance.main.password
     log_group_name              = aws_cloudwatch_log_group.ecs_task_logs.name
     log_group_region            = data.aws_region.current.name
-    allowed_hosts               = "*",
+    allowed_hosts               = aws_lb.server.dns_name,
     weather_api_key             = var.weather_api_key
     google_maps_key             = var.google_maps_key
     django_cors_allowed_origins = var.django_cors_allowed_origins
@@ -79,6 +79,13 @@ resource "aws_security_group" "ecs_service" {
   vpc_id      = aws_vpc.main.id
 
   egress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
     from_port   = 443
     to_port     = 443
     protocol    = "tcp"
@@ -99,9 +106,9 @@ resource "aws_security_group" "ecs_service" {
     from_port = 8000
     to_port   = 8000
     protocol  = "tcp"
-    # security_groups = [
-    #     aws_security_group.lb.id
-    # ]
+    security_groups = [
+      aws_security_group.lb.id
+    ]
   }
 
   tags = local.common_tags
@@ -121,6 +128,12 @@ resource "aws_ecs_service" "server" {
     ]
     security_groups = [aws_security_group.ecs_service.id]
   }
+  load_balancer {
+    target_group_arn = aws_lb_target_group.server.arn
+    container_name   = "proxy"
+    container_port   = 8000
+  }
 
+  depends_on = [aws_lb_listener.server]
 
 }
