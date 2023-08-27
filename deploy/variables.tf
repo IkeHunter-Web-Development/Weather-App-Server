@@ -28,7 +28,7 @@ variable "ecr_image_server" {
 
 variable "ecr_image_proxy" {
   description = "ECR image for the proxy"
-  default     = "178537739852.dkr.ecr.us-east-1.amazonaws.com/weather-app-proxy"
+  default     = "178537739852.dkr.ecr.us-east-1.amazonaws.com/weather-app-proxy:latest"
 }
 
 variable "weather_api_key" {
