@@ -30,10 +30,10 @@ resource "aws_lb_listener" "server" {
 
   default_action {
     type = "redirect"
-    
+
     redirect {
-      port = "443"
-      protocol = "HTTPS"
+      port        = "443"
+      protocol    = "HTTPS"
       status_code = "HTTP_301"
     }
   }
@@ -41,13 +41,13 @@ resource "aws_lb_listener" "server" {
 
 resource "aws_lb_listener" "server_https" {
   load_balancer_arn = aws_lb.server.arn
-  port = 443
-  protocol = "HTTPS"
-  
+  port              = 443
+  protocol          = "HTTPS"
+
   certificate_arn = aws_acm_certificate_validation.cert.certificate_arn
-  
+
   default_action {
-    type = "forward"
+    type             = "forward"
     target_group_arn = aws_lb_target_group.server.arn
   }
 }

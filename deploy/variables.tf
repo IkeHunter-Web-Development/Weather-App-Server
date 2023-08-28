@@ -49,16 +49,16 @@ variable "django_secret_key" {
 
 variable "dns_zone_name" {
   description = "Custom domain name."
-  default = "weatherwise.cloud"
+  default     = "weatherwise.cloud"
 }
 
 variable "subdomain" {
   description = "Subdomain per environment."
-  type = map(string)
-  
+  type        = map(string)
+
   default = {
     production = "api"
-    staging = "api.staging"
-    dev = "api.dev"
+    staging    = "api.staging"
+    dev        = "api.dev"
   }
 }
