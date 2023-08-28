@@ -49,7 +49,7 @@ data "template_file" "server_container_definitions" {
     db_pass                     = aws_db_instance.main.password
     log_group_name              = aws_cloudwatch_log_group.ecs_task_logs.name
     log_group_region            = data.aws_region.current.name
-    allowed_hosts               = aws_lb.server.dns_name,
+    allowed_hosts               = aws_route53_record.app.fqdn,
     weather_api_key             = var.weather_api_key
     google_maps_key             = var.google_maps_key
     django_cors_allowed_origins = var.django_cors_allowed_origins
@@ -136,7 +136,7 @@ resource "aws_ecs_service" "server" {
     container_port   = 8000
   }
 
-  depends_on = [aws_lb_listener.server]
+  depends_on = [aws_lb_listener.server_https]
 
 }
 

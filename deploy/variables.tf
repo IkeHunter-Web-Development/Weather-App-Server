@@ -40,9 +40,25 @@ variable "google_maps_key" {
 }
 
 variable "django_cors_allowed_origins" {
-  default = "weatherwise.cloud"
+  default = "https://weatherwise.cloud"
 }
 
 variable "django_secret_key" {
   description = "Secret key for django config."
+}
+
+variable "dns_zone_name" {
+  description = "Custom domain name."
+  default = "weatherwise.cloud"
+}
+
+variable "subdomain" {
+  description = "Subdomain per environment."
+  type = map(string)
+  
+  default = {
+    production = "api"
+    staging = "api.staging"
+    dev = "api.dev"
+  }
 }
