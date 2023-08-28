@@ -53,6 +53,8 @@ data "template_file" "server_container_definitions" {
     weather_api_key             = var.weather_api_key
     google_maps_key             = var.google_maps_key
     django_cors_allowed_origins = var.django_cors_allowed_origins
+    s3_storage_bucket_name      = aws_s3_bucket.app_public_files.bucket
+    s3_storage_bucket_region    = data.aws_region.current.name
   }
 }
 
@@ -136,4 +138,25 @@ resource "aws_ecs_service" "server" {
 
   depends_on = [aws_lb_listener.server]
 
+}
+
+data "template_file" "ecs_s3_write_policy" {
+  template = file("./templates/ecs/s3-write-policy.json.tpl")
+
+  vars = {
+    bucket_arn = aws_s3_bucket.app_public_files.arn
+  }
+}
+
+resource "aws_iam_policy" "ecs_s3_access" {
+  name        = "${local.prefix}-AppS3AccessPolicy"
+  path        = "/"
+  description = "Allow access to teh recipe app S3 bucket"
+
+  policy = data.template_file.ecs_s3_write_policy.rendered
+}
+
+resource "aws_iam_role_policy_attachment" "ecs_s3_access" {
+  role       = aws_iam_role.app_iam_role.name
+  policy_arn = aws_iam_policy.ecs_s3_access.arn
 }

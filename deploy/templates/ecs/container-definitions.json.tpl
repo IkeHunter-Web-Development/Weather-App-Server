@@ -13,7 +13,9 @@
             {"name": "ALLOWED_HOSTS", "value": "${allowed_hosts}"},
             {"name": "API_KEY", "value": "${weather_api_key}"},
             {"name": "MAPS_KEY", "value": "${google_maps_key}"},
-            {"name": "CORS_ALLOWED_ORIGINS", "value": "${django_cors_allowed_origins}"}
+            {"name": "CORS_ALLOWED_ORIGINS", "value": "${django_cors_allowed_origins}"},
+            {"name": "S3_STORAGE_BUCKET_NAME", "value": "${s3_storage_bucket_name}"},
+            {"name": "S3_STORAGE_BUCKET_REGION", "value": "${s3_storage_bucket_region}"}
         ],
         "logConfiguration": {
             "logDriver": "awslogs",
