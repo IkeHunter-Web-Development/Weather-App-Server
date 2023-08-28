@@ -28,6 +28,7 @@ services:
       - DB_USER=devuser
       - DB_PASS=changeme
       - DEBUG=1
+      - S3_STORAGE_BACKEND=0
     depends_on:
       - db
 
