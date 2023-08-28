@@ -89,13 +89,13 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'app.wsgi.application'
 
-CORS_ALLOWED_ORIGINS = []
-CORS_ALLOWED_ORIGINS.extend(
-    filter(
-        None,
-        os.environ.get('CORS_ALLOWED_ORIGINS', '').split(',')
-    )
-)
+# CORS_ALLOWED_ORIGINS = []
+# CORS_ALLOWED_ORIGINS.extend(
+#     filter(
+#         None,
+#         os.environ.get('CORS_ALLOWED_ORIGINS', '').split(',')
+#     )
+# )
 
 
 # Database

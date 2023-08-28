@@ -7,5 +7,5 @@ output "bastion_host" {
 }
 
 output "server_endpoint" {
-  value = aws_lb.server.dns_name
+  value = aws_route53_record.app.fqdn
 }
