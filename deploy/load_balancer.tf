@@ -19,7 +19,12 @@ resource "aws_lb_target_group" "server" {
   port        = 8000
 
   health_check {
-    path = "/api/docs/"
+    enabled             = true
+    interval            = 30
+    path                = "/api/docs/"
+    timeout             = 3
+    healthy_threshold   = 3
+    unhealthy_threshold = 3
   }
 }
 
