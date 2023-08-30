@@ -1,20 +1,23 @@
 import requests
 import json
-import environ
+# import environ
+import os
 import time
 import datetime
 from django.contrib.postgres.search import SearchQuery
 from logic.models import Page, Conditions, Forecast, ForecastTable, ForecastRow, SearchLog
 
-env = environ.Env()
-environ.Env.read_env()
+# env = os.environ.get()
+# environ.Env.read_env()
 
 class Summary:
     def __init__(self):
         self.lat = 0
         self.long = 0
-        self.key = env('API_KEY')
-        self.maps_key = env('MAPS_KEY')
+        # self.key = env('API_KEY')
+        self.key = os.environ.get('API_KEY')
+        # self.maps_key = env('MAPS_KEY')
+        self.maps_key = os.environ.get('MAPS_KEY')
         self.summary: Page = None
         self.forecast_limit = 12
         self.postal_code = 0
@@ -43,7 +46,7 @@ class Summary:
 
         data = self._request(url)
         hourly = self._request(hourlyUrl)
-        print("rain: ", hourly["list"][0]["pop"])
+        # print("rain: ", hourly["list"][0]["pop"])
 
         current_conditions = Conditions(
             location = self.summary,
@@ -282,6 +285,10 @@ class Summary:
         headers = {}
         response = requests.request("GET", url, headers=headers, data=payload)
         # print(response.json())
+        # print(self.lat, self.long)
+        # print(self.key)
+        # print(os.environ.get('MAPS_KEY'))
+        # print(response.json()["results"])
         self.postal_code = response.json()["results"][0]["address_components"][6]["long_name"]
         self.city_name = response.json()["results"][0]["address_components"][2]["long_name"]
         return self.postal_code
