@@ -21,7 +21,7 @@ resource "aws_lb_target_group" "server" {
   health_check {
     enabled             = true
     interval            = 30
-    path                = "/api/docs/"
+    path                = "/"
     timeout             = 3
     healthy_threshold   = 3
     unhealthy_threshold = 3
