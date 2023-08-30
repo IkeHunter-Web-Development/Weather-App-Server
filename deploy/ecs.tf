@@ -113,7 +113,7 @@ resource "aws_ecs_service" "server" {
   name            = "${local.prefix}-server"
   cluster         = aws_ecs_cluster.main.name
   task_definition = aws_ecs_task_definition.server.family
-  desired_count   = 1
+  desired_count   = 2
   launch_type     = "FARGATE"
 
   network_configuration {
