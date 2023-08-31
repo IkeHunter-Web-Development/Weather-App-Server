@@ -12,7 +12,11 @@ services:
       - DB_NAME=devdb
       - DB_USER=devuser
       - DB_PASS=changeme
-      - ALLOWED_HOSTS=127.0.0.1
+      - ALLOWED_HOSTS=127.0.0.1,localhost
+      - DEBUG=1
+      - S3_STORAGE_BACKEND=0
+      - API_KEY=${API_KEY}
+      - MAPS_KEY=${MAPS_KEY}
     depends_on:
       - db
   
@@ -24,6 +28,13 @@ services:
       - "8000:8000"
     volumes:
       - static_data_ww:/vol/static
+  
+  frontend:
+    image: weather-app-frontend:latest
+    depends_on:
+      - proxy
+    ports:
+      - "4200:80"
   
   db:
     image: postgres:13-alpine

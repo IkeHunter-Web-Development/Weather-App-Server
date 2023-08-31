@@ -3,7 +3,7 @@
         "name": "app",
         "image": "${app_image}",
         "essential": true,
-        "memoryReservation": 256,
+        "memoryReservation": 128,
         "environment": [
             {"name": "DJANGO_SECRET_KEY", "value": "${django_secret_key}"},
             {"name": "DB_HOST", "value": "${db_host}"},
@@ -49,7 +49,7 @@
                 "hostPort": 8000
             }
         ],
-        "memoryReservation": 256,
+        "memoryReservation": 128,
         "environment": [
             {"name": "APP_HOST", "value": "127.0.0.1"},
             {"name": "APP_PORT", "value": "9000"},
@@ -70,5 +70,24 @@
                 "sourceVolume": "static"
             }
         ]
+    },
+    {
+        "name": "frontend",
+        "image": "${frontend_image}",
+        "essential": true,
+        "portMappings": [
+            {
+                "containerPort": 4200
+            }
+        ],
+        "memoryReservation": 256,
+        "logConfiguration": {
+            "logDriver": "awslogs",
+            "options": {
+                "awslogs-group": "${log_group_name}",
+                "awslogs-region": "${log_group_region}",
+                "awslogs-stream-prefix": "frontend"
+            }
+        }
     }
 ]

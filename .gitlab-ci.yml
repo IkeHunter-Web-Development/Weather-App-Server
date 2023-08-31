@@ -59,7 +59,7 @@ Staging Plan:
     - terraform workspace select staging
     - terraform plan
   rules:
-    - if: '$CI_COMMIT_BRANCH =~ /^(main|production)$/'
+    - if: '$CI_COMMIT_BRANCH =~ /^(main)$/'
 
 Staging Apply:
   stage: Staging Apply
@@ -70,7 +70,7 @@ Staging Apply:
     - terraform workspace select staging
     - terraform apply -auto-approve
   rules:
-    - if: '$CI_COMMIT_BRANCH =~ /^(main|production)$/'
+    - if: '$CI_COMMIT_BRANCH =~ /^(main)$/'
 
 Production Plan:
   stage: Production Plan
@@ -104,7 +104,7 @@ Staging Destroy:
     - terraform workspace select staging
     - terraform destroy -auto-approve
   rules:
-    - if: '$CI_COMMIT_BRANCH =~ /^(main|production)$/'
+    - if: '$CI_COMMIT_BRANCH =~ /^(main)$/'
       when: manual
 
 Production Destroy:
