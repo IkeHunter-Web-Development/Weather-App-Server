@@ -31,6 +31,18 @@ variable "ecr_image_proxy" {
   default     = "178537739852.dkr.ecr.us-east-1.amazonaws.com/weather-app-proxy:latest"
 }
 
+variable "ecr_image_frontend" {
+  description = "ECR image for the frontend"
+  default     = "178537739852.dkr.ecr.us-east-1.amazonaws.com/weather-app-frontend"
+}
+# variable "ecr_image_frontend_tagged" {
+#   default = {
+#     dev = var.ecr_image_frontend + ":dev"
+#     staging = var.ecr_image_frontend + ":staging"
+#     production = var.ecr_image_frontend + ":latest"
+#   }
+# }
+
 variable "weather_api_key" {
   description = "Open Weather Maps API Key."
 }
@@ -52,13 +64,24 @@ variable "dns_zone_name" {
   default     = "weatherwise.cloud"
 }
 
-variable "subdomain" {
+variable "server_subdomain" {
   description = "Subdomain per environment."
   type        = map(string)
 
   default = {
     production = "api"
-    staging    = "api.staging"
-    dev        = "api.dev"
+    staging    = "staging.api"
+    dev        = "dev.api"
+  }
+}
+
+variable "frontend_subdomain" {
+  description = "Subdomain per environment."
+  type        = map(string)
+
+  default = {
+    production = ""
+    staging    = "staging"
+    dev        = "dev"
   }
 }
