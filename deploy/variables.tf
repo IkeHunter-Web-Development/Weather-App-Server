@@ -85,3 +85,11 @@ variable "frontend_subdomain" {
     dev        = "dev."
   }
 }
+
+# variable "production_only" {
+#   default = terraform.workspace == "production" ? 1 : 0
+# }
+
+# variable "non_production_only" {
+#   default = terraform.workspace == "production" ? 0 : 1
+# }
