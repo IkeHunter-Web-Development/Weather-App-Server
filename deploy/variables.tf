@@ -69,9 +69,9 @@ variable "server_subdomain" {
   type        = map(string)
 
   default = {
-    production = "api"
-    staging    = "staging.api"
-    dev        = "dev.api"
+    production = "api."
+    staging    = "staging.api."
+    dev        = "dev.api."
   }
 }
 
@@ -81,7 +81,7 @@ variable "frontend_subdomain" {
 
   default = {
     production = ""
-    staging    = "staging"
-    dev        = "dev"
+    staging    = "staging."
+    dev        = "dev."
   }
 }
