@@ -47,6 +47,10 @@
             {
                 "containerPort": 8000,
                 "hostPort": 8000
+            },
+            {
+                "containerPort": 4200,
+                "hostPort": 4200
             }
         ],
         "memoryReservation": 128,
@@ -68,18 +72,17 @@
                 "readOnly": true,
                 "containerPath": "/vol/static",
                 "sourceVolume": "static"
+            },
+            {
+                "readOnly": false,
+                "containerPath": "/vol/client",
+                "sourceVolume": "client"
             }
         ]
     },
     {
         "name": "frontend",
         "image": "${frontend_image}",
-        "essential": true,
-        "portMappings": [
-            {
-                "containerPort": 4200
-            }
-        ],
         "memoryReservation": 256,
         "logConfiguration": {
             "logDriver": "awslogs",
@@ -88,6 +91,13 @@
                 "awslogs-region": "${log_group_region}",
                 "awslogs-stream-prefix": "frontend"
             }
-        }
+        },
+        "mountPoints": [
+            {
+                "readOnly": false,
+                "containerPath": "/app/dist",
+                "sourceVolume": "client"
+            }
+        ]
     }
 ]

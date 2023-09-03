@@ -66,12 +66,22 @@ resource "aws_lb_listener" "server_https" {
   port              = 443
   protocol          = "HTTPS"
 
-  certificate_arn = aws_acm_certificate_validation.server_cert.certificate_arn
+  # certificate_arn = aws_acm_certificate_validation.server_cert.certificate_arn
 
   default_action {
     type             = "forward"
     target_group_arn = aws_lb_target_group.server.arn
   }
+}
+
+resource "aws_lb_listener_certificate" "server" {
+  listener_arn    = aws_lb_listener.server_https.arn
+  certificate_arn = aws_acm_certificate_validation.server_cert.certificate_arn
+}
+
+resource "aws_lb_listener_certificate" "frontend" {
+  listener_arn    = aws_lb_listener.server_https.arn
+  certificate_arn = aws_acm_certificate_validation.frontend_cert.certificate_arn
 }
 
 # resource "aws_lb_listener" "frontend" {
@@ -104,7 +114,7 @@ resource "aws_lb_listener" "server_https" {
 # }
 
 resource "aws_lb_listener_rule" "server" {
-  listener_arn = aws_lb_listener.server.arn
+  listener_arn = aws_lb_listener.server_https.arn
   priority     = 100
 
   action {
@@ -120,7 +130,7 @@ resource "aws_lb_listener_rule" "server" {
 }
 
 resource "aws_lb_listener_rule" "frontend" {
-  listener_arn = aws_lb_listener.server.arn
+  listener_arn = aws_lb_listener.server_https.arn
   priority     = 99
 
   action {

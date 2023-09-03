@@ -55,7 +55,8 @@ data "template_file" "server_container_definitions" {
     django_cors_allowed_origins = var.django_cors_allowed_origins
     s3_storage_bucket_name      = aws_s3_bucket.app_public_files.bucket
     s3_storage_bucket_region    = data.aws_region.current.name
-    frontend_image              = var.ecr_image_frontend
+    frontend_image              = "${var.ecr_image_frontend}:${terraform.workspace}"
+    # frontend_image              = var.ecr_image_frontend + ":" + terraform.workspace
   }
 }
 
@@ -71,6 +72,9 @@ resource "aws_ecs_task_definition" "server" {
 
   volume {
     name = "static"
+  }
+  volume {
+    name = "client"
   }
 
   tags = local.common_tags
@@ -140,7 +144,7 @@ resource "aws_ecs_service" "server" {
   }
   load_balancer {
     target_group_arn = aws_lb_target_group.frontend.arn
-    container_name   = "frontend"
+    container_name   = "proxy"
     container_port   = 4200
   }
 

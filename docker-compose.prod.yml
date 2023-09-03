@@ -24,18 +24,22 @@ services:
     image: proxy:latest
     depends_on:
       - app
+      - client
     ports:
       - "8000:8000"
+      - "4200:4200"
     volumes:
       - static_data_ww:/vol/static
+      - frontend_data:/vol/client
+    environment:
+      - API_BASE="http://localhost:8080000"
   
-  frontend:
+  client:
     image: weather-app-frontend:latest
-    depends_on:
-      - proxy
-    ports:
-      - "4200:80"
-  
+    volumes:
+      - frontend_data:/app/dist
+    environment:
+      - API_BASE="http://localhost:8080000"
   db:
     image: postgres:13-alpine
     environment:
@@ -45,3 +49,4 @@ services:
 
 volumes:
   static_data_ww:
+  frontend_data:
