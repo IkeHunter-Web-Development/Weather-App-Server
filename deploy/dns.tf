@@ -14,11 +14,11 @@ resource "aws_route53_record" "server" {
 resource "aws_route53_record" "frontend" {
   zone_id = data.aws_route53_zone.zone.zone_id
   name    = "${lookup(var.frontend_subdomain, terraform.workspace)}${data.aws_route53_zone.zone.name}"
-  type = "A"
-  
+  type    = "A"
+
   alias {
-        name = aws_lb.server.dns_name
-    zone_id = aws_lb.server.zone_id
+    name                   = aws_lb.server.dns_name
+    zone_id                = aws_lb.server.zone_id
     evaluate_target_health = true
   }
   # type    = "CNAME"
@@ -29,11 +29,11 @@ resource "aws_route53_record" "frontend" {
 
 # resource "aws_route53_record" "frontend_apex" {
 #   count = var.production_only
-  
+
 #   zone_id = data.aws_route53_zone.zone.zone_id
 #   name = data.aws_route53_zone.zone.name
 #   type = "A"
-  
+
 #   alias {
 #     name = aws_lb.server.dns_name
 #     zone_id = aws_lb.server.zone_id
