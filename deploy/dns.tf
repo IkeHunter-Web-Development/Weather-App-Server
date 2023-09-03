@@ -4,7 +4,7 @@ data "aws_route53_zone" "zone" {
 
 resource "aws_route53_record" "server" {
   zone_id = data.aws_route53_zone.zone.zone_id
-  name    = "${lookup(var.server_subdomain, terraform.workspace)}.${data.aws_route53_zone.zone.name}"
+  name    = "${lookup(var.server_subdomain, terraform.workspace)}${data.aws_route53_zone.zone.name}"
   type    = "CNAME"
   ttl     = 300
 
@@ -13,7 +13,7 @@ resource "aws_route53_record" "server" {
 
 resource "aws_route53_record" "frontend" {
   zone_id = data.aws_route53_zone.zone.zone_id
-  name    = "${lookup(var.frontend_subdomain, terraform.workspace)}.${data.aws_route53_zone.zone.name}"
+  name    = "${lookup(var.frontend_subdomain, terraform.workspace)}${data.aws_route53_zone.zone.name}"
   type    = "CNAME"
   ttl     = 300
 
